@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  master:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+       - MYSQL_ROOT_PASSWORD=master
+    volumes:
+      - "./conf/master:/etc/mysql/conf.d"
+      - "./logs/master:/logs"
+      - "./data/master:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+
+  slave:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+       - MYSQL_ROOT_PASSWORD=slave
+    volumes:
+      - "./conf/slave:/etc/mysql/conf.d"
+      - "./logs/slave:/logs"
+      - "./data/slave:/var/lib/mysql"
+    ports:
+      - "3307:3306"
